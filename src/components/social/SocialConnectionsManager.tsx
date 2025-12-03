@@ -113,9 +113,7 @@ export function SocialConnectionsManager() {
           refresh_token: null,
           token_expires_at: null,
           connected_at: new Date().toISOString(),
-          last_used_at: null,
-          is_active: true,
-          metadata: null,
+          last_refreshed_at: null,
         }
         
         setConnections([...connections, mockConnection])
