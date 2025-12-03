@@ -1,26 +1,395 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --background: #0a0e27;
+  --foreground: #ffffff;
+  --card: #1a1f3a;
+  --card-foreground: #ffffff;
+  --muted: #2a2f4a;
+  --muted-foreground: #9ca3af;
+  --border: #374151;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Calendar Fixes - Professional Spacing */
+.rdp {
+  --rdp-cell-size: 48px;
+  color: white;
+  padding: 1rem;
+}
+
+.rdp-month {
+  width: 100%;
+}
+
+.rdp-caption {
+  color: white;
+  font-weight: 600;
+  font-size: 1.125rem;
+  margin-bottom: 1.25rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(168, 85, 247, 0.2);
+}
+
+.rdp-table {
+  width: 100%;
+  max-width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.rdp-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.5rem;
+}
+
+.rdp-week {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 6px;
+  margin-bottom: 6px;
+}
+
+.rdp-day {
+  width: 100%;
+  height: var(--rdp-cell-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rdp-weekday {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #a78bfa;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.rdp-day button {
+  width: 100%;
+  height: 100%;
+  color: white;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rdp-day button:hover:not(:disabled) {
+  background-color: rgba(168, 85, 247, 0.25);
+  border-color: rgba(168, 85, 247, 0.6);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.3);
+}
+
+.rdp-day button[data-selected-single="true"] {
+  background: linear-gradient(135deg, #9333ea, #a855f7);
+  color: white;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.4);
+  transform: scale(1.05);
+}
+
+.rdp-day button:disabled {
+  color: #6b7280;
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rdp-day_outside {
+  color: #6b7280;
+  opacity: 0.3;
+}
+
+.rdp-button_previous,
+.rdp-button_next {
+  color: #a78bfa;
+  transition: all 0.2s ease;
+  width: 36px;
+  height: 36px;
+  border-radius: 0.5rem;
+}
+
+.rdp-button_previous:hover,
+.rdp-button_next:hover {
+  color: white;
+  background-color: rgba(168, 85, 247, 0.25);
+  transform: scale(1.1);
+}
+
+/* Month/Year Dropdown Styling */
+.rdp-dropdown_root {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.rdp-dropdown {
+  appearance: none;
+  background-color: rgba(10, 14, 39, 0.8);
+  border: 2px solid rgba(168, 85, 247, 0.3);
+  border-radius: 0.5rem;
+  color: white;
+  font-weight: 600;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.9375rem;
+}
+
+.rdp-dropdown:hover {
+  border-color: rgba(168, 85, 247, 0.6);
+  background-color: rgba(168, 85, 247, 0.15);
+}
+
+.rdp-dropdown:focus {
+  outline: none;
+  border-color: #a855f7;
+  box-shadow: 0 0 0 3px rgba(168, 85, 247, 0.2);
+}
+
+.rdp-dropdown option {
+  background-color: #1a1f3a;
+  color: white;
+  padding: 0.5rem;
+}
+
+.rdp-chevron {
+  position: absolute;
+  right: 0.5rem;
+  pointer-events: none;
+  color: #a78bfa;
+}
+
+.rdp-dropdowns {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Caption with dropdowns */
+.rdp-caption_label {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Improve button interactivity */
+.rdp-day button:not(:disabled) {
+  cursor: pointer;
+}
+
+.rdp-day button:focus-visible {
+  outline: 2px solid #a855f7;
+  outline-offset: 2px;
+}
+
+/* Today indicator */
+.rdp-day_today button:not([data-selected-single="true"]) {
+  background-color: rgba(168, 85, 247, 0.15);
+  border: 2px solid rgba(168, 85, 247, 0.4);
+}
+
+
+/* Landing Page Animations */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateY(0);
+  }
+  30% {
+    transform: translateY(12px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.8s ease-out;
+}
+
+.animate-scroll {
+  animation: scroll 2s ease-in-out infinite;
+}
+
+.animation-delay-100 {
+  animation-delay: 0.1s;
+  animation-fill-mode: backwards;
+}
+
+.animation-delay-200 {
+  animation-delay: 0.2s;
+  animation-fill-mode: backwards;
+}
+
+.animation-delay-300 {
+  animation-delay: 0.3s;
+  animation-fill-mode: backwards;
+}
+
+/* Grid background pattern */
+.bg-grid-slate-100 {
+  background-image: linear-gradient(to right, rgb(241 245 249 / 0.5) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(241 245 249 / 0.5) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+}
+
+
+/* Hyperspeed Animation Styles */
+@keyframes pulse-slow {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+@keyframes hyperspeed-line {
+  0% {
+    transform: translateY(-100vh) scaleY(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.5;
+  }
+  90% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(100vh) scaleY(2);
+    opacity: 0;
+  }
+}
+
+@keyframes hyperspeed-particle {
+  0% {
+    transform: translate(0, 0) scale(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  90% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--tx), var(--ty)) scale(1);
+    opacity: 0;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(30px, -30px) scale(1.1);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.9);
+  }
+}
+
+@keyframes float-delayed {
+  0%, 100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(-30px, 30px) scale(0.9);
+  }
+  66% {
+    transform: translate(20px, -20px) scale(1.1);
+  }
+}
+
+.animate-pulse-slow {
+  animation: pulse-slow 4s ease-in-out infinite;
+}
+
+.animate-float {
+  animation: float 20s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 25s ease-in-out infinite;
+}
+
+.hyperspeed-lines {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hyperspeed-line {
+  position: absolute;
+  width: 2px;
+  height: 100px;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(59, 130, 246, 0.5),
+    rgba(168, 85, 247, 0.5),
+    transparent
+  );
+  animation: hyperspeed-line linear infinite;
+}
+
+.hyperspeed-particles {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.hyperspeed-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.8), transparent);
+  border-radius: 50%;
+  --tx: calc((Math.random() - 0.5) * 200px);
+  --ty: calc((Math.random() - 0.5) * 200px);
+  animation: hyperspeed-particle ease-out infinite;
 }

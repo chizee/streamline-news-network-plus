@@ -1,0 +1,20 @@
+{
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.next": true
+  },
+  "typescript.validate.enable": true,
+  "files.associations": {
+    "*.ts": "typescript"
+  },
+  // Exclude Supabase Edge Functions from TypeScript validation
+  // These files use Deno runtime and will show false errors in VS Code
+  "typescript.tsserver.experimental.enableProjectDiagnostics": false
+}

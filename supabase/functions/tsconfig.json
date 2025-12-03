@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES2021",
+    "lib": ["ES2021"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "strict": true,
+    "skipLibCheck": true,
+    "noEmit": true,
+    "types": ["https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts"]
+  },
+  "exclude": ["node_modules"]
+}
