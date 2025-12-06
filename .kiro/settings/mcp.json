@@ -4,7 +4,7 @@
       "command": "npx",
       "args": ["-y", "firecrawl-mcp"],
       "env": {
-        "FIRECRAWL_API_KEY": "fc-23971bf245494fb788d9f354bbe6e052"
+        "FIRECRAWL_API_KEY": ""
       },
       "disabled": false,
       "autoApprove": []
@@ -30,7 +30,7 @@
         "@modelcontextprotocol/server-brave-search"
       ],
       "env": {
-        "BRAVE_API_KEY": "BSAKKPjfuZ5-18stR4HWdVvlTB6t6r"
+        "BRAVE_API_KEY": ""
       },
       "disabled": false,
       "autoApprove": []
@@ -38,14 +38,14 @@
     "supabase": {
       "url": "https://mcp.supabase.com/mcp",
       "headers": {
-        "Authorization": "Bearer sbp_c43d28dcc365ff814ce732c86df11e407c0f8e18"
+        "Authorization": ""
       },
       "disabled": false
     },
     "vercel": {
       "url": "https://mcp.vercel.com",
       "headers": {
-        "Authorization": "Bearer PyHAHdU7EbAZOGunDY5hyfn2"
+        "Authorization": ""
       },
       "disabled": false,
       "autoApprove": []
