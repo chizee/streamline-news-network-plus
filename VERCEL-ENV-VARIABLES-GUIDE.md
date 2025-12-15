@@ -46,12 +46,12 @@
 
 **Variable 5: OPENAI_API_KEY**
 - Key: `OPENAI_API_KEY`
-- Value: `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`
+- Value: `your_openai_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 6: ANTHROPIC_API_KEY**
 - Key: `ANTHROPIC_API_KEY`
-- Value: `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`
+- Value: `your_anthropic_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 7: GOOGLE_AI_API_KEY**
