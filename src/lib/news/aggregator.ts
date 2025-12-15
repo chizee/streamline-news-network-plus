@@ -6,15 +6,15 @@ import { NewsAPIClient } from './newsapi-client'
 import { MediastackClient } from './mediastack-client'
 import { GNewsClient } from './gnews-client'
 import { HackerNewsClient } from './hackernews-client'
-import { 
-  NEWS_CATEGORIES, 
-  getCategoryKeywords, 
-  getTrendingKeywords,
-  calculateKeywordRelevance,
-  INDUSTRY_KEYWORDS,
-  MARKET_KEYWORDS,
-  ALL_KEYWORDS
-} from './categories'
+// import { 
+//   NEWS_CATEGORIES, 
+//   getCategoryKeywords, 
+//   getTrendingKeywords,
+//   calculateKeywordRelevance,
+//   INDUSTRY_KEYWORDS,
+//   MARKET_KEYWORDS,
+//   ALL_KEYWORDS
+// } from './categories'
 
 export interface AggregatorConfig {
   maxArticles: number
@@ -208,11 +208,11 @@ export class NewsAggregator {
     const text = `${article.title} ${article.description || ''} ${article.content || ''}`.toLowerCase()
     
     let score = 0
-    let matchCount = 0
+    // let matchCount = 0
 
     for (const keyword of aiKeywords) {
       if (text.includes(keyword)) {
-        matchCount++
+        // matchCount++
         // Weight title matches higher
         if (article.title.toLowerCase().includes(keyword)) {
           score += 0.3

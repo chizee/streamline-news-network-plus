@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { Twitter, Facebook, Instagram, MessageCircle, Loader2, AlertCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog'
@@ -69,13 +69,7 @@ export function PublishDialog({
   const [isLoadingConnections, setIsLoadingConnections] = useState(true)
   const supabase = createClient()
 
-  useEffect(() => {
-    if (open) {
-      loadConnectedPlatforms()
-    }
-  }, [open])
-
-  async function loadConnectedPlatforms() {
+  const loadConnectedPlatforms = useCallback(async () => {
     setIsLoadingConnections(true)
     try {
       const { data: { user } } = await supabase.auth.getUser()
@@ -96,7 +90,13 @@ export function PublishDialog({
     } finally {
       setIsLoadingConnections(false)
     }
-  }
+  }, [supabase])
+
+  useEffect(() => {
+    if (open) {
+      loadConnectedPlatforms()
+    }
+  }, [open, loadConnectedPlatforms])
 
   function togglePlatform(platformId: string) {
     setSelectedPlatforms((prev) =>
@@ -164,8 +164,8 @@ export function PublishDialog({
       const results = await response.json()
       
       // Show results
-      const successCount = results.filter((r: any) => r.success).length
-      const failCount = results.filter((r: any) => !r.success).length
+      const successCount = results.filter((r: { success: boolean }) => r.success).length
+      const failCount = results.filter((r: { success: boolean }) => !r.success).length
 
       if (successCount > 0) {
         toast.success(`Published to ${successCount} platform${successCount > 1 ? 's' : ''}`)
@@ -173,8 +173,8 @@ export function PublishDialog({
       
       if (failCount > 0) {
         results
-          .filter((r: any) => !r.success)
-          .forEach((r: any) => {
+          .filter((r: { success: boolean }) => !r.success)
+          .forEach((r: { platform: string; error: string }) => {
             toast.error(`${r.platform}: ${r.error}`)
           })
       }

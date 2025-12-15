@@ -62,7 +62,7 @@ export function ProfileForm({ profile, userId }: ProfileFormProps) {
 
       setMessage({ type: 'success', text: 'Profile updated successfully!' })
       router.refresh()
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'An unexpected error occurred' })
     } finally {
       setIsLoading(false)

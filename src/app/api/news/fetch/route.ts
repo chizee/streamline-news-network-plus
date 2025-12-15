@@ -1,87 +1,96 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { NewsAggregator } from '@/lib/news/aggregator'
+import { secureApiHandler, validateInput, SecurityErrorType } from '@/lib/security'
+import { z } from 'zod'
 import type { NewsArticle } from '@/types/news'
 
 export const dynamic = 'force-dynamic'
 
-export async function GET(request: NextRequest) {
-  try {
-    const supabase = await createClient()
+// Validation schema for news fetch parameters
+const newsFetchSchema = z.object({
+  q: z.string().min(1).max(200).optional(),
+  max: z.coerce.number().min(1).max(100).default(20), // Increased to 100 to match frontend
+  hours: z.coerce.number().min(1).max(168).default(48) // Max 1 week
+})
 
-    // Check authentication
-    const {
-      data: { session },
-    } = await supabase.auth.getSession()
+async function handleNewsFetch(request: NextRequest): Promise<NextResponse> {
+  const supabase = await createClient()
 
-    if (!session) {
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+  // Check authentication
+  const {
+    data: { session },
+  } = await supabase.auth.getSession()
+
+  if (!session) {
+    throw {
+      type: SecurityErrorType.UNAUTHORIZED,
+      message: 'Authentication required',
+      statusCode: 401
     }
-
-    // Get query parameters
-    const searchParams = request.nextUrl.searchParams
-    const query = searchParams.get('q') || 'artificial intelligence AI machine learning'
-    const maxArticles = parseInt(searchParams.get('max') || '20')
-    const hours = parseInt(searchParams.get('hours') || '48')
-
-    // Initialize aggregator
-    const aggregator = new NewsAggregator({
-      maxArticles,
-      minRelevanceScore: 0.3,
-    })
-
-    // Fetch news with date filter
-    const fromDate = new Date()
-    fromDate.setHours(fromDate.getHours() - hours)
-
-    const result = await aggregator.fetchNews(query, {
-      maxResults: maxArticles,
-      fromDate,
-      language: 'en',
-      sortBy: 'publishedAt',
-    })
-
-    // Score articles for relevance
-    const scoredArticles = aggregator.scoreArticles(result.articles)
-
-    // Filter by minimum relevance score
-    const relevantArticles = scoredArticles.filter(
-      article => article.relevance_score && article.relevance_score >= 0.3
-    )
-
-    // Store articles in database
-    const storedArticles = await storeArticles(supabase, relevantArticles)
-
-    return NextResponse.json({
-      success: true,
-      source: result.source,
-      totalFetched: result.totalFetched,
-      filtered: result.filtered,
-      relevant: relevantArticles.length,
-      stored: storedArticles.length,
-      articles: storedArticles,
-      errors: result.errors,
-    })
-  } catch (error) {
-    console.error('Error fetching news:', error)
-    
-    return NextResponse.json(
-      {
-        error: 'Failed to fetch news',
-        message: error instanceof Error ? error.message : 'Unknown error',
-      },
-      { status: 500 }
-    )
   }
+
+  // Validate query parameters
+  const searchParams = request.nextUrl.searchParams
+  const queryParams = {
+    q: searchParams.get('q') || 'artificial intelligence AI machine learning',
+    max: searchParams.get('max') || '20',
+    hours: searchParams.get('hours') || '48'
+  }
+  
+  const validatedParams = validateInput(newsFetchSchema, queryParams)
+
+  // Initialize aggregator with validated parameters
+  const aggregator = new NewsAggregator({
+    maxArticles: validatedParams.max,
+    minRelevanceScore: 0.3,
+  })
+
+  // Fetch news with date filter
+  const fromDate = new Date()
+  fromDate.setHours(fromDate.getHours() - validatedParams.hours)
+
+  const result = await aggregator.fetchNews(validatedParams.q || 'artificial intelligence AI machine learning', {
+    maxResults: validatedParams.max,
+    fromDate,
+    language: 'en',
+    sortBy: 'publishedAt',
+  })
+
+  // Score articles for relevance
+  const scoredArticles = aggregator.scoreArticles(result.articles)
+
+  // Filter by minimum relevance score
+  const relevantArticles = scoredArticles.filter(
+    article => article.relevance_score && article.relevance_score >= 0.3
+  )
+
+  // Store articles in database
+  const storedArticles = await storeArticles(supabase, relevantArticles)
+
+  return NextResponse.json({
+    success: true,
+    source: result.source,
+    totalFetched: result.totalFetched,
+    filtered: result.filtered,
+    relevant: relevantArticles.length,
+    stored: storedArticles.length,
+    articles: storedArticles,
+    errors: result.errors,
+    timestamp: new Date().toISOString()
+  })
 }
 
-async function storeArticles(supabase: any, articles: NewsArticle[]): Promise<NewsArticle[]> {
+// Export the secured handler
+export const GET = secureApiHandler(handleNewsFetch)
+
+async function storeArticles(supabase: Awaited<ReturnType<typeof createClient>>, articles: NewsArticle[]): Promise<NewsArticle[]> {
   const stored: NewsArticle[] = []
 
   for (const article of articles) {
     try {
       // Check if article already exists
-      const { data: existing, error: checkError } = await supabase
+      const { data: existing } = await supabase
         .from('news_articles')
         .select('id, url')
         .eq('url', article.url)
@@ -100,7 +109,14 @@ async function storeArticles(supabase: any, articles: NewsArticle[]): Promise<Ne
           .single()
 
         if (!updateError && updated) {
-          stored.push(updated)
+          // Ensure all fields match NewsArticle type
+          const processedArticle: NewsArticle = {
+            ...updated,
+            category: updated.category || [],
+            sentiment: (updated.sentiment as 'positive' | 'neutral' | 'negative' | null) || null,
+            is_active: updated.is_active ?? true
+          }
+          stored.push(processedArticle)
           console.log(`Updated existing article: ${article.title}`)
         }
       } else {
@@ -127,7 +143,14 @@ async function storeArticles(supabase: any, articles: NewsArticle[]): Promise<Ne
           .single()
 
         if (!insertError && inserted) {
-          stored.push(inserted)
+          // Ensure all fields match NewsArticle type
+          const processedArticle: NewsArticle = {
+            ...inserted,
+            category: inserted.category || [],
+            sentiment: (inserted.sentiment as 'positive' | 'neutral' | 'negative' | null) || null,
+            is_active: inserted.is_active ?? true
+          }
+          stored.push(processedArticle)
           console.log(`Inserted new article: ${article.title}`)
         } else if (insertError) {
           console.error(`Insert error for ${article.url}:`, insertError)

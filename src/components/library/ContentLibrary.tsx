@@ -40,7 +40,7 @@ export function ContentLibrary({ initialContent, publishedPosts = {} }: ContentL
   const [searchQuery, setSearchQuery] = useState('')
   const [dateRange, setDateRange] = useState<{ from?: Date; to?: Date }>({})
   const [selectedItems, setSelectedItems] = useState<Set<string>>(new Set())
-  const [postsData, setPostsData] = useState<Record<string, PublishedPost[]>>(publishedPosts)
+  const [postsData] = useState<Record<string, PublishedPost[]>>(publishedPosts)
 
   const filteredContent = content.filter((item) => {
     // Platform filter

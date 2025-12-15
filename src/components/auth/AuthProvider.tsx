@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useEffect } from 'react'
+import { createContext, useContext, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { useAuthStore } from '@/store/authStore'
 import type { User } from '@supabase/supabase-js'
@@ -10,6 +10,34 @@ const AuthContext = createContext<{ user: User | null }>({ user: null })
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const { setUser, setProfile, setPreferences, setLoading } = useAuthStore()
   const supabase = createClient()
+
+  const fetchUserData = useCallback(async (userId: string) => {
+    try {
+      // Fetch profile
+      const { data: profile } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', userId)
+        .single()
+
+      if (profile) {
+        setProfile(profile)
+      }
+
+      // Fetch preferences
+      const { data: preferences } = await supabase
+        .from('user_preferences')
+        .select('*')
+        .eq('user_id', userId)
+        .single()
+
+      if (preferences) {
+        setPreferences(preferences)
+      }
+    } catch (error) {
+      console.error('Error fetching user data:', error)
+    }
+  }, [supabase, setProfile, setPreferences])
 
   useEffect(() => {
     // Get initial session
@@ -54,35 +82,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       subscription.unsubscribe()
     }
-  }, [setUser, setProfile, setPreferences, setLoading])
-
-  const fetchUserData = async (userId: string) => {
-    try {
-      // Fetch profile
-      const { data: profile } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', userId)
-        .single()
-
-      if (profile) {
-        setProfile(profile)
-      }
-
-      // Fetch preferences
-      const { data: preferences } = await supabase
-        .from('user_preferences')
-        .select('*')
-        .eq('user_id', userId)
-        .single()
-
-      if (preferences) {
-        setPreferences(preferences)
-      }
-    } catch (error) {
-      console.error('Error fetching user data:', error)
-    }
-  }
+  }, [fetchUserData, supabase.auth, setUser, setProfile, setPreferences, setLoading])
 
   return <AuthContext.Provider value={{ user: useAuthStore.getState().user }}>{children}</AuthContext.Provider>
 }

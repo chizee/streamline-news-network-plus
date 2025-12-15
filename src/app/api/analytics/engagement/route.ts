@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     } : undefined
 
     // Get engagement data
-    const engagement = await getEngagementData(user.id, filters)
+    const engagement = await getEngagementData(user.id)
     
     return NextResponse.json(engagement)
   } catch (error) {

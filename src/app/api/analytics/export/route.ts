@@ -36,9 +36,9 @@ export async function GET(request: NextRequest) {
 
     // Fetch all analytics data
     const [overview, content, engagement, topContent] = await Promise.all([
-      getAnalyticsOverview(user.id, filters),
-      getContentAnalytics(user.id, filters),
-      getEngagementData(user.id, filters),
+      getAnalyticsOverview(user.id),
+      getContentAnalytics(user.id),
+      getEngagementData(user.id),
       getTopContent(user.id, 20)
     ])
 

@@ -4,11 +4,11 @@
 // NOTE: TypeScript errors in this file are expected in the IDE.
 // This code runs in Deno runtime (not Node.js) and will work correctly when deployed to Supabase.
 
-/// <reference types="https://esm.sh/@supabase/functions-js/src/edge-runtime.d.ts" />
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-import { createClient } from 'jsr:@supabase/supabase-js@2'
+// import { createClient } from 'jsr:@supabase/supabase-js@2'
 
-const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
+// const SUPABASE_URL = Deno.env.get('SUPABASE_URL')!
 const SUPABASE_SERVICE_ROLE_KEY = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!
 
 Deno.serve(async (req) => {
@@ -22,7 +22,7 @@ Deno.serve(async (req) => {
       })
     }
 
-    const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
+    // const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY)
 
     // Call the news fetch API endpoint
     const appUrl = Deno.env.get('APP_URL') || 'http://localhost:3000'

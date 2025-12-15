@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import { NewsFeed } from './NewsFeed'
@@ -16,7 +16,7 @@ interface NewsFeedClientProps {
 
 export function NewsFeedClient({ initialArticles, initialBookmarkedIds, userId, shouldAutoFetch = false }: NewsFeedClientProps) {
   const router = useRouter()
-  const [articles, setArticles] = useState<NewsArticle[]>(initialArticles)
+  const [articles] = useState<NewsArticle[]>(initialArticles)
   const [bookmarkedIds, setBookmarkedIds] = useState<Set<string>>(new Set(initialBookmarkedIds))
   const [isLoading, setIsLoading] = useState(false)
   const [hasAutoFetched, setHasAutoFetched] = useState(false)
@@ -95,7 +95,7 @@ export function NewsFeedClient({ initialArticles, initialBookmarkedIds, userId, 
     }
   }
 
-  const handleRefresh = async () => {
+  const handleRefresh = useCallback(async () => {
     setIsLoading(true)
 
     try {
@@ -122,7 +122,7 @@ export function NewsFeedClient({ initialArticles, initialBookmarkedIds, userId, 
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [router])
 
   const handleSelectArticle = (article: NewsArticle) => {
     // Open article in new tab
@@ -135,7 +135,7 @@ export function NewsFeedClient({ initialArticles, initialBookmarkedIds, userId, 
       setHasAutoFetched(true)
       handleRefresh()
     }
-  }, [shouldAutoFetch, hasAutoFetched, isLoading])
+  }, [shouldAutoFetch, hasAutoFetched, isLoading, handleRefresh])
 
   return (
     <NewsFeed

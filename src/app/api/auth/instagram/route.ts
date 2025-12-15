@@ -1,12 +1,12 @@
 // Instagram OAuth Initiation Route
 // Instagram uses Facebook's OAuth system
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { InstagramClient } from '@/lib/social/instagram-client'
 import { generateState } from '@/lib/social/oauth-utils'
 import { cookies } from 'next/headers'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const instagramClient = new InstagramClient()
     

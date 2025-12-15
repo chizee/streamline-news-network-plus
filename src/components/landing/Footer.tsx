@@ -1,5 +1,7 @@
 'use client'
 
+import Image from 'next/image'
+
 export function Footer() {
   const currentYear = new Date().getFullYear()
 
@@ -9,7 +11,7 @@ export function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <img src="/logo.svg" alt="Streamline News Network SNN+" className="w-12 h-12" />
+              <Image src="/logo.svg" alt="Streamline News Network SNN+" width={48} height={48} className="w-12 h-12" />
               <div className="flex flex-col leading-tight">
                 <span className="text-white font-bold text-lg tracking-tight">Streamline</span>
                 <span className="text-white font-medium text-xs tracking-wide">News Network</span>

@@ -26,7 +26,14 @@ export default async function LibraryPage() {
     .eq('user_id', user.id)
 
   // Group published posts by content_id
-  const publishedPosts: Record<string, any[]> = {}
+  interface PublishedPost {
+    platform: string
+    status: 'pending' | 'published' | 'failed'
+    platform_post_url?: string
+    error_message?: string
+    published_at?: string
+  }
+  const publishedPosts: Record<string, PublishedPost[]> = {}
   if (publishedPostsData) {
     for (const post of publishedPostsData) {
       if (!publishedPosts[post.content_id]) {
@@ -34,10 +41,10 @@ export default async function LibraryPage() {
       }
       publishedPosts[post.content_id].push({
         platform: post.platform,
-        status: post.status,
-        platform_post_url: post.platform_post_url,
-        error_message: post.error_message,
-        published_at: post.published_at,
+        status: (post.status as 'pending' | 'published' | 'failed') || 'pending',
+        platform_post_url: post.platform_post_url || undefined,
+        error_message: post.error_message || undefined,
+        published_at: post.published_at || undefined,
       })
     }
   }

@@ -22,7 +22,9 @@ export async function PATCH(
     const { scheduled_for, status } = body
 
     // Build update object
-    const updates: any = {}
+    const updates: { scheduled_for?: string; status?: string; updated_at: string } = {
+      updated_at: new Date().toISOString()
+    }
     if (scheduled_for) {
       const scheduledDate = new Date(scheduled_for)
       if (scheduledDate <= new Date()) {

@@ -115,7 +115,7 @@ export function ContentAnalytics({ data }: ContentAnalyticsProps) {
               </div>
               
               <div className="flex-1 ml-4 space-y-1">
-                {data.byTone.slice(0, 3).map((tone, index) => (
+                {data.byTone.slice(0, 3).map((tone) => (
                   <div key={tone.tone} className="flex items-center justify-between text-sm">
                     <div className="flex items-center">
                       <div 

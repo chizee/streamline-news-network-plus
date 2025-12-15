@@ -1,9 +1,11 @@
 // Social Media Publishing Clients
 
-export { TwitterClient } from './twitter-client'
-export { FacebookClient } from './facebook-client'
-export { InstagramClient } from './instagram-client'
-export { ThreadsClient } from './threads-client'
+import { TwitterClient } from './twitter-client'
+import { FacebookClient } from './facebook-client'
+import { InstagramClient } from './instagram-client'
+import { ThreadsClient } from './threads-client'
+
+export { TwitterClient, FacebookClient, InstagramClient, ThreadsClient }
 
 export type {
   SocialPlatform,
@@ -17,13 +19,13 @@ export type {
 export function getSocialClient(platform: string) {
   switch (platform) {
     case 'twitter':
-      return new (require('./twitter-client').TwitterClient)()
+      return new TwitterClient()
     case 'facebook':
-      return new (require('./facebook-client').FacebookClient)()
+      return new FacebookClient()
     case 'instagram':
-      return new (require('./instagram-client').InstagramClient)()
+      return new InstagramClient()
     case 'threads':
-      return new (require('./threads-client').ThreadsClient)()
+      return new ThreadsClient()
     default:
       throw new Error(`Unsupported platform: ${platform}`)
   }

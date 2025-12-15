@@ -82,7 +82,7 @@ export function SavedArticles({ initialBookmarks }: SavedArticlesProps) {
           <h1 className="text-3xl font-bold text-white">Saved Articles</h1>
         </div>
         <Card className="p-12 text-center bg-[#1a1f3a] border-gray-800">
-          <p className="text-gray-400 mb-4">You haven't saved any articles yet</p>
+          <p className="text-gray-400 mb-4">You haven&apos;t saved any articles yet</p>
           <Button onClick={() => (window.location.href = '/dashboard/news')} className="bg-gradient-to-r from-blue-500 to-purple-500 hover:opacity-90">
             Browse News
           </Button>

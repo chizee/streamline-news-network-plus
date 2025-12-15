@@ -7,8 +7,8 @@ import { TwitterClient } from '@/lib/social/twitter-client'
 import { FacebookClient } from '@/lib/social/facebook-client'
 import { InstagramClient } from '@/lib/social/instagram-client'
 import { ThreadsClient } from '@/lib/social/threads-client'
-import { retryIfRetryable } from '@/lib/social/retry-logic'
-import { handlePlatformError } from '@/lib/social/error-handlers'
+// import { retryIfRetryable } from '@/lib/social/retry-logic'
+// import { handlePlatformError } from '@/lib/social/error-handlers'
 import type { SocialPlatform, PublishResult } from '@/lib/social/types'
 
 interface PublishRequest {

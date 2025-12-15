@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { 
   Home, 
@@ -50,7 +51,7 @@ export function Sidebar({ userProfile }: SidebarProps) {
     <aside className="hidden lg:flex lg:flex-col lg:w-64 lg:fixed lg:inset-y-0 lg:border-r lg:border-gray-800 lg:bg-[#0a0e27]">
       {/* Logo */}
       <div className="flex items-center gap-2 h-16 px-6 border-b border-gray-800">
-        <img src="/logo.svg" alt="SNN+" className="w-8 h-8" />
+        <Image src="/logo.svg" alt="SNN+" width={32} height={32} className="w-8 h-8" />
         <span className="text-xl font-bold text-white">SNN+</span>
       </div>
 

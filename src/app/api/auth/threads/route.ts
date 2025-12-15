@@ -1,12 +1,12 @@
 // Threads OAuth Initiation Route
 // Threads uses Facebook's OAuth system
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { ThreadsClient } from '@/lib/social/threads-client'
 import { generateState } from '@/lib/social/oauth-utils'
 import { cookies } from 'next/headers'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const threadsClient = new ThreadsClient()
     

@@ -2,8 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+// import { zodResolver } from '@hookform/resolvers/zod'
+// import { useForm } from 'react-hook-form'
 import * as z from 'zod'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -13,6 +13,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import type { Tables } from '@/types/database'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const preferencesSchema = z.object({
   notificationEmail: z.boolean(),
   notificationPush: z.boolean(),
@@ -22,6 +23,7 @@ const preferencesSchema = z.object({
   preferredPlatforms: z.array(z.string()),
 })
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 type PreferencesFormData = z.infer<typeof preferencesSchema>
 
 interface PreferencesFormProps {
@@ -86,7 +88,7 @@ export function PreferencesForm({ preferences, userId }: PreferencesFormProps) {
 
       setMessage({ type: 'success', text: 'Preferences updated successfully!' })
       router.refresh()
-    } catch (err) {
+    } catch {
       setMessage({ type: 'error', text: 'An unexpected error occurred' })
     } finally {
       setIsLoading(false)

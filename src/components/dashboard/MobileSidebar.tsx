@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { X, Home, Newspaper, Sparkles, Library, Bookmark, Settings, BarChart3, Calendar, Share2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
@@ -53,7 +54,7 @@ export function MobileSidebar({ isOpen, onClose, userProfile }: MobileSidebarPro
         {/* Header */}
         <div className="flex items-center justify-between h-16 px-6 border-b border-gray-800">
           <div className="flex items-center gap-2">
-            <img src="/logo.svg" alt="SNN+" className="w-8 h-8" />
+            <Image src="/logo.svg" alt="SNN+" width={32} height={32} className="w-8 h-8" />
             <span className="text-xl font-bold text-white">SNN+</span>
           </div>
           <button

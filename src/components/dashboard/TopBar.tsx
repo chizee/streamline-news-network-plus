@@ -90,7 +90,7 @@ export function TopBar({ onMenuClick, userProfile }: TopBarProps) {
                   <div className="px-4 py-8 text-center">
                     <Bell className="w-12 h-12 text-gray-600 mx-auto mb-3" />
                     <p className="text-sm text-gray-400">No notifications yet</p>
-                    <p className="text-xs text-gray-500 mt-1">We'll notify you when something important happens</p>
+                    <p className="text-xs text-gray-500 mt-1">We&apos;ll notify you when something important happens</p>
                   </div>
                 </div>
               </div>

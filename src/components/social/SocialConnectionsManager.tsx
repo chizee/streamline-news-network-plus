@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import type { Tables } from '@/types/database'
 import { Button } from '@/components/ui/button'
@@ -50,11 +50,7 @@ export function SocialConnectionsManager() {
   const [disconnectingPlatform, setDisconnectingPlatform] = useState<string | null>(null)
   const supabase = createClient()
 
-  useEffect(() => {
-    loadConnections()
-  }, [])
-
-  async function loadConnections() {
+  const loadConnections = useCallback(async () => {
     try {
       const { data: { user }, error: userError } = await supabase.auth.getUser()
       
@@ -83,13 +79,17 @@ export function SocialConnectionsManager() {
       }
       
       setConnections(data || [])
-    } catch (error) {
+    } catch {
       // Silently handle all errors - component will show empty state
       setConnections([])
     } finally {
       setLoading(false)
     }
-  }
+  }, [supabase])
+
+  useEffect(() => {
+    loadConnections()
+  }, [loadConnections])
 
   async function handleConnect(platform: string) {
     setConnectingPlatform(platform)

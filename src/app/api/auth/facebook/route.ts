@@ -1,11 +1,11 @@
 // Facebook OAuth Initiation Route
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { FacebookClient } from '@/lib/social/facebook-client'
 import { generateState } from '@/lib/social/oauth-utils'
 import { cookies } from 'next/headers'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const facebookClient = new FacebookClient()
     

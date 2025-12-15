@@ -13,8 +13,8 @@ export interface PlatformError {
 /**
  * Parse and categorize Twitter API errors
  */
-export function handleTwitterError(error: any): PlatformError {
-  const message = error.message || String(error)
+export function handleTwitterError(error: unknown): PlatformError {
+  const message = error instanceof Error ? error.message : String(error)
   const lowerMessage = message.toLowerCase()
   
   // Rate limit errors
@@ -109,8 +109,8 @@ export function handleTwitterError(error: any): PlatformError {
 /**
  * Parse and categorize Facebook API errors
  */
-export function handleFacebookError(error: any): PlatformError {
-  const message = error.message || String(error)
+export function handleFacebookError(error: unknown): PlatformError {
+  const message = error instanceof Error ? error.message : String(error)
   const lowerMessage = message.toLowerCase()
   
   // Rate limit errors
@@ -203,8 +203,8 @@ export function handleFacebookError(error: any): PlatformError {
 /**
  * Parse and categorize Instagram API errors
  */
-export function handleInstagramError(error: any): PlatformError {
-  const message = error.message || String(error)
+export function handleInstagramError(error: unknown): PlatformError {
+  const message = error instanceof Error ? error.message : String(error)
   const lowerMessage = message.toLowerCase()
   
   // Rate limit errors
@@ -309,8 +309,8 @@ export function handleInstagramError(error: any): PlatformError {
 /**
  * Parse and categorize Threads API errors
  */
-export function handleThreadsError(error: any): PlatformError {
-  const message = error.message || String(error)
+export function handleThreadsError(error: unknown): PlatformError {
+  const message = error instanceof Error ? error.message : String(error)
   const lowerMessage = message.toLowerCase()
   
   // Rate limit errors
@@ -397,7 +397,7 @@ export function handleThreadsError(error: any): PlatformError {
  */
 export function handlePlatformError(
   platform: SocialPlatform,
-  error: any
+  error: unknown
 ): PlatformError {
   switch (platform) {
     case 'twitter':
@@ -411,7 +411,7 @@ export function handlePlatformError(
     default:
       return {
         platform,
-        message: `Unknown error: ${error.message || String(error)}`,
+        message: `Unknown error: ${error instanceof Error ? error.message : String(error)}`,
         isRetryable: false,
       }
   }

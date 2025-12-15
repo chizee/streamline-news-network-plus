@@ -1,15 +1,15 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
-import * as THREE from 'three'
-import {
-  BloomEffect,
-  EffectComposer,
-  EffectPass,
-  RenderPass,
-  SMAAEffect,
-  SMAAPreset,
-} from 'postprocessing'
+// import * as THREE from 'three'
+// import {
+//   BloomEffect,
+//   EffectComposer,
+//   EffectPass,
+//   RenderPass,
+//   SMAAEffect,
+//   SMAAPreset,
+// } from 'postprocessing'
 
 interface HyperspeedProps {
   effectOptions?: {
@@ -53,7 +53,7 @@ interface HyperspeedProps {
 
 const Hyperspeed: React.FC<HyperspeedProps> = ({ effectOptions = {} }) => {
   const containerRef = useRef<HTMLDivElement>(null)
-  const appRef = useRef<any>(null)
+  const appRef = useRef<unknown>(null)
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -97,11 +97,12 @@ const Hyperspeed: React.FC<HyperspeedProps> = ({ effectOptions = {} }) => {
       onSlowDown: () => {},
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const options = { ...defaultOptions, ...effectOptions }
 
     // Cleanup previous instance
-    if (appRef.current) {
-      appRef.current.dispose()
+    if (appRef.current && typeof appRef.current === 'object' && appRef.current !== null && 'dispose' in appRef.current) {
+      (appRef.current as { dispose: () => void }).dispose()
       while (containerRef.current?.firstChild) {
         containerRef.current.removeChild(containerRef.current.firstChild)
       }
@@ -116,8 +117,8 @@ const Hyperspeed: React.FC<HyperspeedProps> = ({ effectOptions = {} }) => {
 
     // Cleanup function
     return () => {
-      if (appRef.current) {
-        appRef.current.dispose()
+      if (appRef.current && typeof appRef.current === 'object' && appRef.current !== null && 'dispose' in appRef.current) {
+        (appRef.current as { dispose: () => void }).dispose()
         appRef.current = null
       }
     }

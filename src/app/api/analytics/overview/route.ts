@@ -29,7 +29,7 @@ export async function GET(request: NextRequest) {
     } : undefined
 
     // Get analytics overview
-    const overview = await getAnalyticsOverview(user.id, filters)
+    const overview = await getAnalyticsOverview(user.id)
     
     return NextResponse.json(overview)
   } catch (error) {

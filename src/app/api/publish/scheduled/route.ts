@@ -10,11 +10,25 @@ import { InstagramClient } from '@/lib/social/instagram-client'
 import { ThreadsClient } from '@/lib/social/threads-client'
 import type { SocialPlatform } from '@/lib/social/types'
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 interface ScheduledPost {
   id: string
   user_id: string
   content_id: string
   scheduled_for: string
+  generated_content?: {
+    generated_text: string
+    platform: SocialPlatform
+  }
+}
+
+interface UpdateData {
+  updated_at: string
+  failed?: boolean
+  error_message?: string
+  published_at?: string
+  status?: string
+  is_published?: boolean
 }
 
 interface ProcessingResult {
@@ -74,7 +88,7 @@ export async function GET(request: NextRequest) {
     for (const post of scheduledPosts) {
       try {
         // Extract content and platform from joined data
-        const content = (post as any).generated_content
+        const content = post.generated_content
         if (!content || !content.generated_text || !content.platform) {
           console.error(`Content not found for post ${post.id}`)
           await updateScheduledPostStatus(
@@ -277,13 +291,13 @@ export async function GET(request: NextRequest) {
 
 // Helper function to update scheduled post status
 async function updateScheduledPostStatus(
-  supabase: any,
+  supabase: Awaited<ReturnType<typeof createClient>>,
   postId: string,
   failed: boolean,
   errorMessage?: string,
   publishedAt?: string
 ) {
-  const updateData: any = {
+  const updateData: UpdateData = {
     updated_at: new Date().toISOString(),
   }
 

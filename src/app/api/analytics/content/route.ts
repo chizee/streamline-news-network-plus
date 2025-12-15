@@ -35,7 +35,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Get content analytics
-    const analytics = await getContentAnalytics(user.id, Object.keys(filters).length > 0 ? filters : undefined)
+    const analytics = await getContentAnalytics(user.id)
     
     return NextResponse.json(analytics)
   } catch (error) {

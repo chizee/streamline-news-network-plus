@@ -6,10 +6,10 @@ import type {
   ToneMetric,
   DateMetric,
   EngagementData,
-  TopContentItem,
-  AnalyticsFilters
+  TopContentItem
+  // AnalyticsFilters
 } from '@/types/analytics'
-import { subDays, format, parseISO, differenceInDays } from 'date-fns'
+import { subDays, format, parseISO } from 'date-fns'
 
 // Platform colors for consistent theming
 const PLATFORM_COLORS = {
@@ -21,14 +21,14 @@ const PLATFORM_COLORS = {
 }
 
 export async function getAnalyticsOverview(
-  userId: string,
-  filters?: AnalyticsFilters
+  userId: string
+  // _filters?: AnalyticsFilters
 ): Promise<AnalyticsOverview> {
   const supabase = await createClient()
   
-  const dateFilter = filters?.dateRange
-    ? `AND created_at >= '${filters.dateRange.start}' AND created_at <= '${filters.dateRange.end}'`
-    : ''
+  // const dateFilter = filters?.dateRange
+  //   ? `AND created_at >= '${filters.dateRange.start}' AND created_at <= '${filters.dateRange.end}'`
+  //   : ''
 
   // Get total content generated
   const { count: totalContent } = await supabase
@@ -43,7 +43,7 @@ export async function getAnalyticsOverview(
     .eq('user_id', userId)
 
   // Get total scheduled posts
-  const { count: totalScheduled } = await (supabase as any)
+  const { count: totalScheduled } = await supabase
     .from('scheduled_posts')
     .select('*', { count: 'exact', head: true })
     .eq('user_id', userId)
@@ -94,8 +94,8 @@ export async function getAnalyticsOverview(
 }
 
 export async function getContentAnalytics(
-  userId: string,
-  filters?: AnalyticsFilters
+  userId: string
+  // _filters?: AnalyticsFilters
 ): Promise<ContentAnalytics> {
   const supabase = await createClient()
   
@@ -174,8 +174,8 @@ export async function getContentAnalytics(
 }
 
 export async function getEngagementData(
-  userId: string,
-  filters?: AnalyticsFilters
+  userId: string
+  // _filters?: AnalyticsFilters
 ): Promise<EngagementData[]> {
   const supabase = await createClient()
   
@@ -200,7 +200,7 @@ export async function getEngagementData(
       .lte('created_at', `${endDate}T23:59:59.999Z`),
     
     // Use type assertion for scheduled_posts table
-    (supabase as any)
+    supabase
       .from('scheduled_posts')
       .select('created_at')
       .eq('user_id', userId)
@@ -275,7 +275,7 @@ function calculateActiveStreak(activities: { created_at: string }[]): number {
   const uniqueDates = [...new Set(dates)].sort().reverse()
   
   let streak = 0
-  const today = format(new Date(), 'yyyy-MM-dd')
+  // const today = format(new Date(), 'yyyy-MM-dd')
   
   for (let i = 0; i < uniqueDates.length; i++) {
     const expectedDate = format(subDays(new Date(), i), 'yyyy-MM-dd')
@@ -315,7 +315,7 @@ function calculateEngagementRate(platformData: { platform: string }[]): number {
   return Math.round(baseRate + Math.random() * 10)
 }
 
-async function calculateGrowthRate(supabase: any, userId: string): Promise<number> {
+async function calculateGrowthRate(supabase: Awaited<ReturnType<typeof createClient>>, userId: string): Promise<number> {
   const thisWeekStart = format(subDays(new Date(), 7), 'yyyy-MM-dd')
   const lastWeekStart = format(subDays(new Date(), 14), 'yyyy-MM-dd')
   
@@ -333,9 +333,11 @@ async function calculateGrowthRate(supabase: any, userId: string): Promise<numbe
     .lt('created_at', thisWeekStart)
   
   if (!lastWeekCount || lastWeekCount === 0) {
-    return thisWeekCount ? 100 : 0
+    return (thisWeekCount || 0) > 0 ? 100 : 0
   }
   
-  const growth = ((thisWeekCount - lastWeekCount) / lastWeekCount) * 100
+  const thisWeek = thisWeekCount || 0
+  const lastWeek = lastWeekCount || 0
+  const growth = ((thisWeek - lastWeek) / lastWeek) * 100
   return Math.round(growth)
 }

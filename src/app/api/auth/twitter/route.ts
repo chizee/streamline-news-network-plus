@@ -1,11 +1,11 @@
 // Twitter OAuth Initiation Route
 
-import { NextRequest, NextResponse } from 'next/server'
+import { NextResponse } from 'next/server'
 import { TwitterClient } from '@/lib/social/twitter-client'
 import { generatePKCE, generateState } from '@/lib/social/oauth-utils'
 import { cookies } from 'next/headers'
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     const twitterClient = new TwitterClient()
     

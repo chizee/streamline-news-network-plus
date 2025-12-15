@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { Menu, X } from 'lucide-react'
 import { useState } from 'react'
 
@@ -13,7 +14,7 @@ export function Header() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-3">
-            <img src="/logo.svg" alt="Streamline News Network SNN+" className="w-12 h-12" />
+            <Image src="/logo.svg" alt="Streamline News Network SNN+" width={48} height={48} className="w-12 h-12" />
             <div className="flex flex-col leading-tight">
               <span className="text-white font-bold text-lg tracking-tight">Streamline</span>
               <span className="text-white font-medium text-xs tracking-wide">News Network</span>

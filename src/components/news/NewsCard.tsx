@@ -1,6 +1,7 @@
 'use client'
 
 import { formatDistanceToNow } from 'date-fns'
+import Image from 'next/image'
 import { ExternalLink, Bookmark, BookmarkCheck } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -45,9 +46,11 @@ export function NewsCard({ article, isBookmarked = false, onBookmark, onSelect }
             </CardDescription>
           </div>
           {article.image_url && (
-            <img
+            <Image
               src={article.image_url}
               alt={article.title}
+              width={96}
+              height={96}
               className="w-24 h-24 object-cover rounded-md flex-shrink-0"
             />
           )}
