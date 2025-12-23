@@ -66,8 +66,8 @@ http://localhost:3000
 
 Check `.env.local`:
 ```bash
-TWITTER_CLIENT_ID=NXMyY2RNellYNmctd3QxMHM0VVQ6MTpjaQ
-TWITTER_CLIENT_SECRET=5HuMMdKlYW4Px39nvNzOOT2z_FMDwHiPMoy5D3W3OlUgMNNnD1
+TWITTER_CLIENT_ID=your_twitter_client_id_here
+TWITTER_CLIENT_SECRET=your_twitter_client_secret_here
 TWITTER_CALLBACK_URL=http://localhost:3000/api/auth/twitter/callback
 ```
 
@@ -111,8 +111,8 @@ TWITTER_CALLBACK_URL=http://localhost:3000/api/auth/twitter/callback
 
 **5. Update `.env.local`:**
 ```bash
-FACEBOOK_APP_ID=706825715832098
-FACEBOOK_APP_SECRET=26732858dd0e5cba0f06c575cbce5624
+FACEBOOK_APP_ID=your_facebook_app_id_here
+FACEBOOK_APP_SECRET=your_facebook_app_secret_here
 FACEBOOK_CALLBACK_URL=http://localhost:3000/api/auth/facebook/callback
 ```
 
@@ -147,8 +147,8 @@ Instagram uses Facebook's OAuth system.
 
 **4. Update `.env.local`:**
 ```bash
-INSTAGRAM_APP_ID=4299676923608884
-INSTAGRAM_APP_SECRET=ea9e03566bc1821caac931689a7d8de4
+INSTAGRAM_APP_ID=your_instagram_app_id_here
+INSTAGRAM_APP_SECRET=your_instagram_app_secret_here
 ```
 
 **5. Permissions Needed:**

@@ -22,32 +22,32 @@ SUPABASE_SERVICE_ROLE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhY
 ```
 OPENAI_API_KEY=your_openai_api_key_here
 ANTHROPIC_API_KEY=your_anthropic_api_key_here
-GOOGLE_AI_API_KEY=AIzaSyDITTCvFGpOnthkZMVMCOn6GR5Ze7WrGsw
+GOOGLE_AI_API_KEY=your_google_ai_api_key_here
 ```
 
 ### News APIs
 ```
-SERPER_API_KEY=aae9c6a69cf077682353213918722b4644280a88
-NEWS_API_KEY=42b1d8bc08bb48ca99b1ae63acaf7f7c
-MEDIASTACK_API_KEY=b8119acf0b9430de2c36035adfa5e850
-GNEWS_API_KEY=a25de0bd9bf5bd98f3cd4d016594bb92
+SERPER_API_KEY=your_serper_api_key_here
+NEWS_API_KEY=your_news_api_key_here
+MEDIASTACK_API_KEY=your_mediastack_api_key_here
+GNEWS_API_KEY=your_gnews_api_key_here
 ```
 
 ### Social Media OAuth
 ```
-TWITTER_CLIENT_ID=NXMyY2RNellYNmctd3QxMHM0VVQ6MTpjaQ
-TWITTER_CLIENT_SECRET=5HuMMdKlYW4Px39nvNzOOT2z_FMDwHiPMoy5D3W3OlUgMNNnD1
+TWITTER_CLIENT_ID=your_twitter_client_id_here
+TWITTER_CLIENT_SECRET=your_twitter_client_secret_here
 TWITTER_CALLBACK_URL=https://snn-plus.vercel.app/api/auth/twitter/callback
 
-FACEBOOK_APP_ID=706825715832098
-FACEBOOK_APP_SECRET=26732858dd0e5cba0f06c575cbce5624
+FACEBOOK_APP_ID=your_facebook_app_id_here
+FACEBOOK_APP_SECRET=your_facebook_app_secret_here
 FACEBOOK_CALLBACK_URL=https://snn-plus.vercel.app/api/auth/facebook/callback
 
-INSTAGRAM_APP_ID=4299676923608884
-INSTAGRAM_APP_SECRET=ea9e03566bc1821caac931689a7d8de4
+INSTAGRAM_APP_ID=your_instagram_app_id_here
+INSTAGRAM_APP_SECRET=your_instagram_app_secret_here
 
-THREADS_APP_ID=1619429509417745
-THREADS_APP_SECRET=c84cadda1a934b0e730b631e5a2b93cb
+THREADS_APP_ID=your_threads_app_id_here
+THREADS_APP_SECRET=your_threads_app_secret_here
 ```
 
 ### Security & App Config

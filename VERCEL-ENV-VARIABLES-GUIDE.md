@@ -56,7 +56,7 @@
 
 **Variable 7: GOOGLE_AI_API_KEY**
 - Key: `GOOGLE_AI_API_KEY`
-- Value: `AIzaSyDITTCvFGpOnthkZMVMCOn6GR5Ze7WrGsw`
+- Value: `your_google_ai_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 ---
@@ -65,22 +65,22 @@
 
 **Variable 8: SERPER_API_KEY**
 - Key: `SERPER_API_KEY`
-- Value: `aae9c6a69cf077682353213918722b4644280a88`
+- Value: `your_serper_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 9: NEWS_API_KEY**
 - Key: `NEWS_API_KEY`
-- Value: `42b1d8bc08bb48ca99b1ae63acaf7f7c`
+- Value: `your_news_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 10: MEDIASTACK_API_KEY**
 - Key: `MEDIASTACK_API_KEY`
-- Value: `b8119acf0b9430de2c36035adfa5e850`
+- Value: `your_mediastack_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 11: GNEWS_API_KEY**
 - Key: `GNEWS_API_KEY`
-- Value: `a25de0bd9bf5bd98f3cd4d016594bb92`
+- Value: `your_gnews_api_key_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 ---
@@ -94,7 +94,7 @@
 
 **Variable 13: TWITTER_CLIENT_SECRET**
 - Key: `TWITTER_CLIENT_SECRET`
-- Value: `5HuMMdKlYW4Px39nvNzOOT2z_FMDwHiPMoy5D3W3OlUgMNNnD1`
+- Value: `your_twitter_client_secret_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 14: TWITTER_CALLBACK_URL**
@@ -113,7 +113,7 @@
 
 **Variable 16: FACEBOOK_APP_SECRET**
 - Key: `FACEBOOK_APP_SECRET`
-- Value: `26732858dd0e5cba0f06c575cbce5624`
+- Value: `your_facebook_app_secret_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 **Variable 17: FACEBOOK_CALLBACK_URL**
@@ -132,7 +132,7 @@
 
 **Variable 19: INSTAGRAM_APP_SECRET**
 - Key: `INSTAGRAM_APP_SECRET`
-- Value: `ea9e03566bc1821caac931689a7d8de4`
+- Value: `your_instagram_app_secret_here`
 - Environments: ✅ Production ✅ Preview ✅ Development
 
 ---
